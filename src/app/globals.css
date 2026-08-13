@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+/**
+ * Design tokens.
+ *
+ * The palette is deliberately restrained — this is a tool a research-integrity
+ * officer would sit in front of, so colour is reserved for the one thing that
+ * carries meaning: the conflict verdict. Everything else is neutral.
+ */
+:root {
+  --background: #fbfbfd;
+  --surface: #ffffff;
+  --surface-muted: #f4f5f8;
+  --border: #e3e5ea;
+  --border-strong: #cdd1da;
+  --foreground: #14161c;
+  --muted: #5c6272;
+  --subtle: #878da0;
+  --accent: #2f5bd8;
+  --accent-soft: #eaf0ff;
+
+  /* Verdict scale: clear / caution / blocked */
+  --clear: #0f7b53;
+  --clear-soft: #e4f6ee;
+  --clear-border: #a8ddc6;
+  --caution: #9a6210;
+  --caution-soft: #fdf2df;
+  --caution-border: #efd09a;
+  --blocked: #b3243c;
+  --blocked-soft: #fdeaee;
+  --blocked-border: #f2b3c0;
+
+  /* Node colours for the evidence graph */
+  --node-researcher: #2f5bd8;
+  --node-paper: #7a5bd8;
+  --node-grant: #0f7b53;
+  --node-institution: #b06510;
+  --node-bridge: #9a6210;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0c0e13;
+    --surface: #14171f;
+    --surface-muted: #1b1f29;
+    --border: #262b37;
+    --border-strong: #363d4d;
+    --foreground: #eceef4;
+    --muted: #9aa2b6;
+    --subtle: #6f778c;
+    --accent: #7f9dff;
+    --accent-soft: #1a2340;
+
+    --clear: #58d0a1;
+    --clear-soft: #12291f;
+    --clear-border: #24503c;
+    --caution: #e5b25c;
+    --caution-soft: #2a2114;
+    --caution-border: #59431f;
+    --blocked: #ff8098;
+    --blocked-soft: #2b141b;
+    --blocked-border: #5c2634;
+
+    --node-researcher: #7f9dff;
+    --node-paper: #b49bff;
+    --node-grant: #58d0a1;
+    --node-institution: #e0a15e;
+    --node-bridge: #e5b25c;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border-subtle: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-clear: var(--clear);
+  --color-clear-soft: var(--clear-soft);
+  --color-clear-border: var(--clear-border);
+  --color-caution: var(--caution);
+  --color-caution-soft: var(--caution-soft);
+  --color-caution-border: var(--caution-border);
+  --color-blocked: var(--blocked);
+  --color-blocked-soft: var(--blocked-soft);
+  --color-blocked-border: var(--blocked-border);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Numbers in tables and stat tiles should not jitter as they change. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
