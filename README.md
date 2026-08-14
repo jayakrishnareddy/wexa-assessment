@@ -9,7 +9,11 @@ graph — co-authorship, doctoral supervision, shared awards and overlapping
 institutional posts — and shows the evidence behind every verdict.
 
 - **Live demo:** **[wexa-assessment.vercel.app](https://wexa-assessment.vercel.app)** — running against a live CognoDB free-tier instance
-- **Screen recording:** _to be added_
+- **Screen recording:** **[docs/demo.mp4](docs/demo.mp4)** — a 77-second walkthrough of the hosted app (click to play on GitHub)
+
+The recording covers: the proposal queue → screening a proposal into eligible /
+review-with-care / conflicted → the evidence behind a blocking conflict → the
+softer second-degree signal → an ad-hoc pair check → the data model.
 
 ![Screening a proposal: 158 candidate reviewers, ranked by expertise and split into eligible, review-with-care and conflicted](docs/screenshots/02-screening.png)
 
