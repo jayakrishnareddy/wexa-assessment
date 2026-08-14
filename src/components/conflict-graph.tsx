@@ -38,6 +38,29 @@ const RADIUS: Record<GraphNodeType, number> = {
 interface LayoutNode extends SimulationNodeDatum, GraphNode {}
 type LayoutLink = SimulationLinkDatum<LayoutNode> & { id: string; label?: string };
 
+const LABEL_FONT_SIZE = 12.5;
+/** Rough advance width per character at LABEL_FONT_SIZE, in user units. */
+const CHAR_WIDTH = 6.6;
+
+/** Paper titles run long; everything else is a name or a reference. */
+function labelCap(type: GraphNodeType): number {
+  return type === "Paper" ? 30 : 26;
+}
+
+/**
+ * Half the rendered width of a node's caption.
+ *
+ * Node labels are centred beneath the node and are far wider than the circle
+ * they belong to, so treating a node as its radius alone lets two captions
+ * overlap even though the circles are comfortably apart. Feeding this into the
+ * collision force and the bounding box makes the label part of the node's
+ * footprint.
+ */
+function halfLabelWidth(node: GraphNode): number {
+  const chars = Math.min(node.label.length, labelCap(node.type));
+  return (chars * CHAR_WIDTH) / 2;
+}
+
 /**
  * Renders the evidence behind a conflict verdict.
  *
@@ -73,7 +96,12 @@ export function ConflictGraph({
       )
       .force("charge", forceManyBody().strength(-700))
       .force("center", forceCenter(WIDTH / 2, HEIGHT / 2))
-      .force("collide", forceCollide<LayoutNode>((node) => RADIUS[node.type] + 26))
+      .force(
+        "collide",
+        forceCollide<LayoutNode>((node) =>
+          Math.max(RADIUS[node.type] + 26, halfLabelWidth(node) + 10),
+        ),
+      )
       .stop();
 
     // d3-force seeds initial positions deterministically, so ticking to
@@ -92,8 +120,10 @@ export function ConflictGraph({
 
     for (const node of nodes) {
       const radius = RADIUS[node.type];
-      minX = Math.min(minX, (node.x ?? 0) - radius);
-      maxX = Math.max(maxX, (node.x ?? 0) + radius);
+      // Horizontally the caption, not the circle, is the widest part.
+      const reach = Math.max(radius, halfLabelWidth(node));
+      minX = Math.min(minX, (node.x ?? 0) - reach);
+      maxX = Math.max(maxX, (node.x ?? 0) + reach);
       minY = Math.min(minY, (node.y ?? 0) - radius);
       // Label and sublabel sit below the node.
       maxY = Math.max(maxY, (node.y ?? 0) + radius + (node.sublabel ? 30 : 18));
@@ -211,11 +241,11 @@ export function ConflictGraph({
                 <text
                   y={radius + 14}
                   textAnchor="middle"
-                  fontSize={12.5}
+                  fontSize={LABEL_FONT_SIZE}
                   className="fill-[var(--foreground)]"
                   fontWeight={isEndpoint ? 600 : 400}
                 >
-                  {truncate(node.label, node.type === "Paper" ? 34 : 26)}
+                  {truncate(node.label, labelCap(node.type))}
                 </text>
 
                 {node.sublabel ? (

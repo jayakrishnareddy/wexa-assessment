@@ -8,8 +8,8 @@ applicants. Panelgraph answers that question by traversing the collaboration
 graph — co-authorship, doctoral supervision, shared awards and overlapping
 institutional posts — and shows the evidence behind every verdict.
 
-- **Live demo:** _to be added after deployment_
-- **Screen recording:** _to be added after deployment_
+- **Live demo:** **[wexa-assessment.vercel.app](https://wexa-assessment.vercel.app)** — running against a live CognoDB free-tier instance
+- **Screen recording:** _to be added_
 
 ![Screening a proposal: 158 candidate reviewers, ranked by expertise and split into eligible, review-with-care and conflicted](docs/screenshots/02-screening.png)
 
