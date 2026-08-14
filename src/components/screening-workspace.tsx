@@ -5,6 +5,7 @@ import type { Verdict } from "@/lib/domain";
 import type { ScreenedReviewer, ScreeningResult } from "@/lib/types";
 import { VerdictBadge } from "./ui";
 import { ExplanationPanel } from "./explanation-panel";
+import { Tour } from "./tour";
 
 type Filter = "all" | Verdict;
 
@@ -96,7 +97,10 @@ export function ScreeningWorkspace({ result }: { result: ScreeningResult }) {
         </div>
       </header>
 
-      <div className="grid grid-cols-3 gap-3 mb-6">
+      {/* data-tour attributes anchor the guided walkthrough. They are queried
+          by name rather than by class or DOM position, so restyling or moving
+          these elements does not silently break the tour. */}
+      <div data-tour="verdicts" className="grid grid-cols-3 gap-3 mb-6">
         <SummaryTile
           label="Eligible"
           value={counts.clear}
@@ -121,6 +125,7 @@ export function ScreeningWorkspace({ result }: { result: ScreeningResult }) {
         <section className="min-w-0">
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <div
+              data-tour="filters"
               role="tablist"
               aria-label="Filter reviewers by verdict"
               className="inline-flex rounded-lg border border-border-subtle bg-surface p-0.5"
@@ -162,8 +167,11 @@ export function ScreeningWorkspace({ result }: { result: ScreeningResult }) {
             </div>
           ) : (
             <ul className="space-y-2">
-              {visible.map((reviewer) => (
-                <li key={reviewer.researcher.id}>
+              {visible.map((reviewer, index) => (
+                <li
+                  key={reviewer.researcher.id}
+                  data-tour={index === 0 ? "reviewer" : undefined}
+                >
                   <ReviewerRow
                     reviewer={reviewer}
                     selected={selected?.researcher.id === reviewer.researcher.id}
@@ -175,10 +183,12 @@ export function ScreeningWorkspace({ result }: { result: ScreeningResult }) {
           )}
         </section>
 
-        <div ref={panelRef} className="lg:sticky lg:top-20">
+        <div data-tour="evidence" ref={panelRef} className="lg:sticky lg:top-20">
           <ExplanationPanel reviewer={selected} proposal={proposal} />
         </div>
       </div>
+
+      <Tour />
     </>
   );
 }

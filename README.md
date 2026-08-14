@@ -331,6 +331,21 @@ behind the verdict and the subgraph that connects them to the applicant.
 
 ![Ad-hoc pair check showing an overlapping affiliation conflict](docs/screenshots/04-pair-check.png)
 
+**A guided walkthrough** runs the first time someone opens a proposal, pointing
+at each part of the screening view and explaining what it does. It marks itself
+complete in `localStorage` and never interrupts again; the **Tour** button in
+the header replays it on demand. The completion flag is versioned
+(`panelgraph.tour.v1`), so rewriting the steps later shows them again to people
+who only saw the old ones.
+
+It is hand-rolled rather than pulled from a tour library — about 180 lines in
+[`src/components/tour.tsx`](src/components/tour.tsx), no dependency, and it
+inherits the app's design tokens so it matches in light and dark. Steps anchor
+to `data-tour` attributes rather than CSS classes or DOM position, and the tour
+declines to start at all if any anchor is missing, so a proposal with no
+reviewers or an unreachable database never produces a spotlight over empty
+space.
+
 **Data model reference**, in the app as well as this README (shown in dark
 mode — the whole interface follows the system colour scheme).
 

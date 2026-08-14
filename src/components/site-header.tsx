@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ConnectionStatus } from "./connection-status";
+import { TourButton } from "./tour-button";
 
 const NAV = [
   { href: "/", label: "Proposals" },
@@ -21,6 +22,7 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
+              data-tour={item.href === "/check" ? "pair-check" : undefined}
               className="px-2.5 py-1.5 rounded-md text-muted hover:text-foreground hover:bg-surface-muted transition-colors"
             >
               {item.label}
@@ -28,7 +30,8 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center gap-3">
+          <TourButton />
           <ConnectionStatus />
         </div>
       </div>
