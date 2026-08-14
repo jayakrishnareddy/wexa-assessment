@@ -9,11 +9,12 @@ graph — co-authorship, doctoral supervision, shared awards and overlapping
 institutional posts — and shows the evidence behind every verdict.
 
 - **Live demo:** **[wexa-assessment.vercel.app](https://wexa-assessment.vercel.app)** — running against a live CognoDB free-tier instance
-- **Screen recording:** **[docs/demo.mp4](docs/demo.mp4)** — a 77-second walkthrough of the hosted app (click to play on GitHub)
+- **Screen recording:** **[docs/demo.mp4](docs/demo.mp4)** — a 100-second walkthrough of the hosted app (click to play on GitHub)
 
-The recording covers: the proposal queue → screening a proposal into eligible /
-review-with-care / conflicted → the evidence behind a blocking conflict → the
-softer second-degree signal → an ad-hoc pair check → the data model.
+The recording covers: the proposal queue → the guided walkthrough that greets a
+first-time visitor → screening a proposal into eligible / review-with-care /
+conflicted → the evidence behind a blocking conflict → the softer second-degree
+signal → an ad-hoc pair check → the data model.
 
 ![Screening a proposal: 158 candidate reviewers, ranked by expertise and split into eligible, review-with-care and conflicted](docs/screenshots/02-screening.png)
 
@@ -332,7 +333,10 @@ behind the verdict and the subgraph that connects them to the applicant.
 ![Ad-hoc pair check showing an overlapping affiliation conflict](docs/screenshots/04-pair-check.png)
 
 **A guided walkthrough** runs the first time someone opens a proposal, pointing
-at each part of the screening view and explaining what it does. It marks itself
+at each part of the screening view and explaining what it does.
+
+![Guided walkthrough spotlighting the verdict tiles with an explanatory tooltip](docs/screenshots/06-walkthrough.png)
+ It marks itself
 complete in `localStorage` and never interrupts again; the **Tour** button in
 the header replays it on demand. The completion flag is versioned
 (`panelgraph.tour.v1`), so rewriting the steps later shows them again to people
